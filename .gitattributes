@@ -1,0 +1,5 @@
+# Windowsで取り出しても、改行をLFのままにする（コンテナ内のスクリプトがCRLFで壊れないように）
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.ico binary

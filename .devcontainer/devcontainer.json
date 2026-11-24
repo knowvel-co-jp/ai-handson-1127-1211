@@ -1,0 +1,49 @@
+{
+  "name": "AIハンズオン 11/27・12/11",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+  "containerEnv": {
+    "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
+    "ANTHROPIC_API_KEY": "",
+    "ANTHROPIC_MODEL": "anthropic/claude-haiku-5.5",
+    "CLAUDE_CODE_PROMPT_CACHE_TTL": "1h",
+    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "100000",
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "32000",
+    "CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION": "false",
+    "CLAUDE_CODE_ENABLE_AWAY_SUMMARY": "0",
+    "DISABLE_AUTOUPDATER": "1"
+  },
+  // PCごとのキーは、Windowsのユーザー環境変数 ANTHROPIC_AUTH_TOKEN から渡す（setup/configure-pc.ps1 で登録）。
+  // VS Code を起動した時点の環境変数が使われるため、登録後は VS Code を一度すべて閉じてから開き直す。
+  "remoteEnv": {
+    "ANTHROPIC_AUTH_TOKEN": "${localEnv:ANTHROPIC_AUTH_TOKEN}"
+  },
+  "onCreateCommand": "npm install -g @anthropic-ai/claude-code@2.1.323",
+  "postCreateCommand": "node scripts/trust-claude.mjs",
+  // プレビューのサーバーは裏で動かす（postAttachCommand で動かすと、VS Code の「Configuring Dev Container」がずっと消えない）。
+  // ログは /tmp/preview.log。コンテナを開き直してもサーバーは動き続け、二重には起動しない。
+  "postStartCommand": "node scripts/start-page.mjs; (curl -s -o /dev/null http://localhost:3000/ || setsid nohup npm run dev > /tmp/preview.log 2>&1 &)",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "プレビュー",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["anthropic.claude-code@2.1.323"],
+      "settings": {
+        "extensions.autoUpdate": false,
+        "claudeCode.disableLoginPrompt": true,
+        "claudeCode.preferredLocation": "sidebar",
+        "chat.disableAIFeatures": true,
+        "workbench.editorAssociations": {
+          "START.md": "vscode.markdown.preview.editor"
+        }
+      }
+    }
+  }
+}
