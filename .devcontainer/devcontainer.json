@@ -36,6 +36,8 @@
       "settings": {
         "claudeCode.disableLoginPrompt": true,
         "claudeCode.preferredLocation": "sidebar",
+        // エディターで開いているファイルを、指示に自動で添えない（そのファイルの中の文字を選んだときだけ添える）
+        "claudeCode.attachOpenFile": false,
         // 学生が触らないファイルを、エクスプローラーと検索に出さない（消してはいない。Claude Code は読める）
         "files.exclude": {
           ".git": true,
