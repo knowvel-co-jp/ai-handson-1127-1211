@@ -40,6 +40,7 @@ $wanted = [ordered]@{
   'extensions.autoUpdate'           = $false
   'update.mode'                     = 'none'   # keep VS Code at the tested version until Day2
   'workbench.startupEditor'         = 'none'
+  'workbench.colorTheme'            = 'Default Light+'  # light theme (easier to read on the projector)
 }
 foreach ($name in $wanted.Keys) {
   $settings | Add-Member -NotePropertyName $name -NotePropertyValue $wanted[$name] -Force
