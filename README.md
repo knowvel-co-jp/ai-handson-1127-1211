@@ -7,8 +7,11 @@ KnowvelのWindows PC 10台で、Dev Container（WSL2＋Docker Desktop）の中�
 | ファイル | 内容 |
 | --- | --- |
 | `index.html` | プレビューの最初のページ。同じフォルダーに置いたHTMLは `http://localhost:3000/ファイル名` で見られます |
-| `server.mjs` | プレビューを表示するための小さなサーバー |
+| `.devcontainer/devcontainer.json` | コンテナの設定（Claude Code の設定、プレビューの起動など） |
+| `.devcontainer/server.mjs` | プレビューを表示するための小さなサーバー |
 | `setup/configure-pc.ps1` | PCごとの下準備（スリープ停止・VS Codeの設定・キーの登録） |
+
+コンテナで開いた VS Code では、`index.html` と学生が作るファイル以外は、エクスプローラーに出さないようにしています（`devcontainer.json` の `files.exclude`）。
 
 ## PCの準備（スタッフ用）
 

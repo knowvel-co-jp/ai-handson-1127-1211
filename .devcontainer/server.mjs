@@ -1,4 +1,4 @@
-// プレビュー用の小さなサーバー。このフォルダーのファイルを http://localhost:3000/ で表示する。
+// プレビュー用の小さなサーバー。ai-handson フォルダー（この .devcontainer の1つ上）のファイルを http://localhost:3000/ で表示する。
 // 開くたびにファイルを読み直すため、ファイルを保存したらプレビューの ↻（更新）で反映される。
 import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
@@ -6,7 +6,7 @@ import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const port = Number(process.env.PORT ?? 3000);
-const root = fileURLToPath(new URL('.', import.meta.url));
+const root = fileURLToPath(new URL('..', import.meta.url));
 
 const types = {
   '.html': 'text/html; charset=utf-8',
@@ -41,7 +41,7 @@ createServer(async (request, response) => {
   }
   if (path.endsWith('/')) path += 'index.html';
 
-  // このフォルダーの外と、隠しファイル・隠しフォルダー（.devcontainer、.claude など）は出さない
+  // ai-handson フォルダーの外と、隠しファイル・隠しフォルダー（.devcontainer、.claude など）は出さない
   const file = normalize(join(root, path));
   const relative = file.slice(root.length);
   if (!file.startsWith(root) || relative.split(sep).some((part) => part.startsWith('.') || part === 'node_modules')) {

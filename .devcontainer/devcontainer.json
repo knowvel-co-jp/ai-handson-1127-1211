@@ -19,7 +19,7 @@
   },
   // プレビューのサーバー。動き続けるため、VS Code の左下の「Configuring Dev Container」は消えないが、異常ではない。
   // postStartCommand で裏で動かす形は、起動の処理が終わるとサーバーも止められたため使わない（2026年11月25日、PC#1）。
-  "postAttachCommand": "npm run dev",
+  "postAttachCommand": "node --watch .devcontainer/server.mjs",
   "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
@@ -34,7 +34,18 @@
       "extensions": ["anthropic.claude-code@2.1.323"],
       "settings": {
         "claudeCode.disableLoginPrompt": true,
-        "claudeCode.preferredLocation": "sidebar"
+        "claudeCode.preferredLocation": "sidebar",
+        // 学生が触らないファイルを、エクスプローラーと検索に出さない（消してはいない。Claude Code は読める）
+        "files.exclude": {
+          ".git": true,
+          ".claude": true,
+          ".devcontainer": true,
+          "setup": true,
+          ".gitattributes": true,
+          ".gitignore": true,
+          "README.md": true,
+          "CLAUDE.md": true
+        }
       }
     }
   }
