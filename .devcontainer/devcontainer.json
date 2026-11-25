@@ -34,8 +34,7 @@
       "extensions": ["anthropic.claude-code@2.1.323"],
       "settings": {
         "claudeCode.disableLoginPrompt": true,
-        "claudeCode.preferredLocation": "sidebar",
-        "chat.disableAIFeatures": true
+        "claudeCode.preferredLocation": "sidebar"
       }
     }
   }

@@ -15,16 +15,10 @@ if (-not $isAdmin) {
 # 1. Never sleep / hibernate (sleep drops Chrome Remote Desktop and stops containers)
 powercfg /change standby-timeout-ac 0
 powercfg /change standby-timeout-dc 0
-powercfg /change hibernate-timeout-ac 0
-powercfg /change hibernate-timeout-dc 0
 powercfg /hibernate off
-Write-Host '[1/4] Sleep and hibernate: off'
+Write-Host '[1/3] Sleep and hibernate: off'
 
-# 2. Keep LF line endings when Git checks files out on Windows
-git config --global core.autocrlf input
-Write-Host '[2/4] git core.autocrlf: input'
-
-# 3. VS Code user settings on the Windows side
+# 2. VS Code user settings on the Windows side
 $settingsDir = Join-Path $env:APPDATA 'Code\User'
 $settingsFile = Join-Path $settingsDir 'settings.json'
 New-Item -ItemType Directory -Force -Path $settingsDir | Out-Null
@@ -52,11 +46,11 @@ foreach ($name in $wanted.Keys) {
   $settings | Add-Member -NotePropertyName $name -NotePropertyValue $wanted[$name] -Force
 }
 [IO.File]::WriteAllText($settingsFile, ($settings | ConvertTo-Json -Depth 20), (New-Object Text.UTF8Encoding($false)))
-Write-Host "[3/4] VS Code settings written: $settingsFile"
+Write-Host "[2/3] VS Code settings written: $settingsFile"
 
 code --install-extension ms-vscode-remote.remote-containers | Out-Null
 
-# 4. OpenRouter key for this PC -> user environment variable ANTHROPIC_AUTH_TOKEN
+# 3. OpenRouter key for this PC -> user environment variable ANTHROPIC_AUTH_TOKEN
 $current = [Environment]::GetEnvironmentVariable('ANTHROPIC_AUTH_TOKEN', 'User')
 $change = $true
 if ($current) {
@@ -77,9 +71,9 @@ if ($change) {
   }
   [Environment]::SetEnvironmentVariable('ANTHROPIC_AUTH_TOKEN', $key, 'User')
   Remove-Variable key
-  Write-Host '[4/4] Key saved to the user environment variable ANTHROPIC_AUTH_TOKEN'
+  Write-Host '[3/3] Key saved to the user environment variable ANTHROPIC_AUTH_TOKEN'
 } else {
-  Write-Host '[4/4] Key: kept the existing one'
+  Write-Host '[3/3] Key: kept the existing one'
 }
 
 Write-Host ''
