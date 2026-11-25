@@ -42,6 +42,7 @@ $wanted = [ordered]@{
   'workbench.startupEditor'         = 'none'
   'workbench.colorTheme'            = 'Default Light+'
   'workbench.experimental.modernUI' = $false   # classic (non-rounded) UI
+  'claudeCode.attachOpenFile'       = $false   # do not send the open file to Claude Code (application scope: ignored in devcontainer.json)
 }
 foreach ($name in $wanted.Keys) {
   $settings | Add-Member -NotePropertyName $name -NotePropertyValue $wanted[$name] -Force
