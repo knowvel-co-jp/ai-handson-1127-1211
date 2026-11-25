@@ -41,6 +41,7 @@ $wanted = [ordered]@{
   'update.mode'                     = 'none'   # keep VS Code at the tested version until Day2
   'workbench.startupEditor'         = 'none'
   'workbench.colorTheme'            = 'Default Light+'
+  'workbench.experimental.modernUI' = $false   # classic (non-rounded) UI
 }
 foreach ($name in $wanted.Keys) {
   $settings | Add-Member -NotePropertyName $name -NotePropertyValue $wanted[$name] -Force
