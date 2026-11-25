@@ -1,6 +1,7 @@
 {
   "name": "AIハンズオン 11/27・12/11",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+  // 元のイメージに pdftoppm を足したもの。一度作ると Docker に残るため、コンテナを消して作り直しても取得し直さない。
+  "build": { "dockerfile": "Dockerfile" },
   "containerEnv": {
     "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
     "ANTHROPIC_API_KEY": "",
