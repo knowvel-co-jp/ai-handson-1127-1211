@@ -17,9 +17,9 @@
   "remoteEnv": {
     "ANTHROPIC_AUTH_TOKEN": "${localEnv:ANTHROPIC_AUTH_TOKEN}"
   },
-  // プレビューのサーバーは、コンテナの起動時に裏で動かす（postAttachCommand で動かすと、VS Code の「Configuring Dev Container」がずっと消えない）。
-  // ログは /tmp/preview.log。ウィンドウを開き直しても、コンテナが動いている間はサーバーも動き続ける。
-  "postStartCommand": "setsid nohup npm run dev > /tmp/preview.log 2>&1 &",
+  // プレビューのサーバー。動き続けるため、VS Code の左下の「Configuring Dev Container」は消えないが、異常ではない。
+  // postStartCommand で裏で動かす形は、起動の処理が終わるとサーバーも止められたため使わない（2026年11月25日、PC#1）。
+  "postAttachCommand": "npm run dev",
   "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
