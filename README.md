@@ -24,6 +24,6 @@ KnowvelのWindows PC 10台で、Dev Container（WSL2＋Docker Desktop）の中�
    powershell -ExecutionPolicy Bypass -File setup\configure-pc.ps1
    ```
 4. VS Code をすべて閉じてから開き直し、`ai-handson` フォルダーを開いて「Reopen in Container」。
-5. 起動のログ（下のターミナル）に「キーの確認：OK」と出ることを確かめる。後から確かめるときは、コンテナのターミナルで `node scripts/check-key.mjs` を実行する。
+5. Claude Code のパネルを開き、「Trust this folder」の確認が出たら信頼する。短い指示を1つ送って、返事が来ることと、プレビュー（Ports タブの「プレビュー」→ Preview in Editor）に反映されることを確かめる。
 
 キーを差し替えたら、手順3をもう一度実行し、VS Code をすべて閉じてから開き直す（コンテナの作り直しは要らない）。
