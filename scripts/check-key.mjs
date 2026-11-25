@@ -26,7 +26,15 @@ export async function checkKey(key = process.env.ANTHROPIC_AUTH_TOKEN) {
   }
 }
 
-// 単体で動かしたとき（node scripts/check-key.mjs）は、結果だけを表示する。
+// コンテナの起動時（postStartCommand）と、スタッフが確かめたいとき（node scripts/check-key.mjs）に結果を表示する。
 if (import.meta.url === `file://${process.argv[1]}`) {
-  console.log(await checkKey());
+  const result = await checkKey();
+  const message = {
+    ok: result.usable ? 'OK' : 'OK（ただし今は上限額に達していて、Claude Code は使えない）',
+    missing: 'キーが登録されていない（Windows の環境変数 ANTHROPIC_AUTH_TOKEN が VS Code に渡っていない）',
+    format: 'キーの形式が違う（sk-or-v1- で始まる OpenRouter のキーではない）',
+    invalid: 'OpenRouter に断られた（キーが無効化・削除されている、または値が違う）',
+    unknown: '確認できなかった（通信の状態を確かめる）',
+  }[result.status];
+  console.log(`キーの確認：${message}`);
 }

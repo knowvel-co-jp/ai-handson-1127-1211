@@ -7,7 +7,6 @@ KnowvelのWindows PC 10台で、Dev Container（WSL2＋Docker Desktop）の中�
 | ファイル | 内容 |
 | --- | --- |
 | `index.html` | プレビューの最初のページ。同じフォルダーに置いたHTMLは `http://localhost:3000/ファイル名` で見られます |
-| `START.md` | コンテナを開いたときに表示される案内とキーの確認結果。開くたびに自動で作り直されます |
 | `server.mjs` | プレビューを表示するための小さなサーバー |
 | `setup/configure-pc.ps1` | PCごとの下準備（スリープ停止・VS Codeの設定・キーの登録） |
 
@@ -25,6 +24,6 @@ KnowvelのWindows PC 10台で、Dev Container（WSL2＋Docker Desktop）の中�
    powershell -ExecutionPolicy Bypass -File setup\configure-pc.ps1
    ```
 4. VS Code をすべて閉じてから開き直し、`ai-handson` フォルダーを開いて「Reopen in Container」。
-5. START.md に「キーの確認：OK」と出て、プレビューが表示されることを確かめる。
+5. 起動のログ（下のターミナル）に「キーの確認：OK」と出ることを確かめる。後から確かめるときは、コンテナのターミナルで `node scripts/check-key.mjs` を実行する。
 
 キーを差し替えたら、手順3をもう一度実行し、VS Code をすべて閉じてから開き直す（コンテナの作り直しは要らない）。
