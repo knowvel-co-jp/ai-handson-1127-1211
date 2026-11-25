@@ -19,14 +19,13 @@
   },
   "onCreateCommand": "npm install -g @anthropic-ai/claude-code@2.1.323",
   "postCreateCommand": "node scripts/trust-claude.mjs",
-  // プレビューのサーバーは裏で動かす（postAttachCommand で動かすと、VS Code の「Configuring Dev Container」がずっと消えない）。
-  // ログは /tmp/preview.log。コンテナを開き直してもサーバーは動き続け、二重には起動しない。
-  "postStartCommand": "node scripts/start-page.mjs; (curl -s -o /dev/null http://localhost:3000/ || setsid nohup npm run dev > /tmp/preview.log 2>&1 &)",
+  // プレビューのサーバーは、コンテナの起動時に裏で動かす（postAttachCommand で動かすと、VS Code の「Configuring Dev Container」がずっと消えない）。
+  // ログは /tmp/preview.log。ウィンドウを開き直しても、コンテナが動いている間はサーバーも動き続ける。
+  "postStartCommand": "node scripts/start-page.mjs; (setsid nohup npm run dev > /tmp/preview.log 2>&1 &)",
   "forwardPorts": [3000],
   "portsAttributes": {
     "3000": {
-      "label": "プレビュー",
-      "onAutoForward": "openPreview"
+      "label": "プレビュー"
     }
   },
   "otherPortsAttributes": {
@@ -36,7 +35,6 @@
     "vscode": {
       "extensions": ["anthropic.claude-code@2.1.323"],
       "settings": {
-        "extensions.autoUpdate": false,
         "claudeCode.disableLoginPrompt": true,
         "claudeCode.preferredLocation": "sidebar",
         "chat.disableAIFeatures": true,
