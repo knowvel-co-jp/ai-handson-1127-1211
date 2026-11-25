@@ -8,7 +8,7 @@ KnowvelのWindows PC 10台で、Dev Container（WSL2＋Docker Desktop）の中�
 | --- | --- |
 | `index.html` | プレビューの最初のページ。同じフォルダーに置いたHTMLは `http://localhost:3000/ファイル名` で見られます |
 | `.devcontainer/devcontainer.json` | コンテナの設定（Claude Code の設定、プレビューの起動など） |
-| `.devcontainer/Dockerfile` | コンテナのイメージ（Node.js の公式イメージに、PDFを読むための `pdftoppm`・`pdftotext` と、Python の `pip` を足したもの） |
+| `.devcontainer/Dockerfile` | コンテナのイメージ（Node.js の公式イメージに、日本語のPDFを読むための道具（`pdftoppm`・`pdftotext` と日本語の文字のデータ）、`rg`、Python の `pip` を足したもの） |
 | `.devcontainer/server.mjs` | プレビューを表示するための小さなサーバー |
 | `setup/configure-pc.ps1` | PCごとの下準備（スリープ停止・VS Codeの設定・キーの登録） |
 
