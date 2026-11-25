@@ -39,7 +39,6 @@ $wanted = [ordered]@{
   'extensions.ignoreRecommendations' = $true   # no "install recommended extension" pop-ups
   'extensions.autoUpdate'           = $false
   'update.mode'                     = 'none'   # keep VS Code at the tested version until Day2
-  'security.workspace.trust.enabled' = $false  # no "Do you trust the authors" / Restricted Mode
   'workbench.startupEditor'         = 'none'
 }
 foreach ($name in $wanted.Keys) {
