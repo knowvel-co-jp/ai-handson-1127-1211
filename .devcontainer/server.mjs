@@ -1,12 +1,11 @@
-// プレビュー用の小さなサーバー。ai-handson フォルダー（この .devcontainer の1つ上）のファイルを http://localhost:3000/ で表示する。
-// ファイルが変わると、開いているページを自動で再読み込みする（HTML を返すときに、そのための短いスクリプトを末尾に足す。ファイルそのものは変えない）。
+// プレビュー用のサーバー（http://localhost:3000/）。ファイルが変わると、開いているページを再読み込みする。
 import { readdir, readFile, stat } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { extname, join, normalize, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const port = Number(process.env.PORT ?? 3000);
-const root = fileURLToPath(new URL('..', import.meta.url)); // 末尾に / が付く
+const root = fileURLToPath(new URL('..', import.meta.url));
 
 const types = {
   '.html': 'text/html; charset=utf-8',
@@ -28,13 +27,8 @@ const types = {
   '.ico': 'image/x-icon',
 };
 
-// 出さないもの・見張らないもの：隠しファイル・隠しフォルダー（.devcontainer、.claude など）と、
-// Claude Code がライブラリを入れたときにできる、ファイルの多いフォルダー
 const ignored = (part) => part.startsWith('.') || ['node_modules', 'venv', '__pycache__'].includes(part);
 
-// ---- 自動の再読み込み ----
-// 開いているページは /__reload につないで待ち、ファイルが変わったら知らせを受けて再読み込みする。
-// Windows のフォルダーをつないだ環境では変更の通知が届かないことがあるため、1秒ごとにファイルの大きさと時刻を見比べる。
 const reloadPath = '/__reload';
 const reloadScript = `<script>new EventSource('${reloadPath}').onmessage = () => location.reload();</script>`;
 const clients = new Set();
@@ -66,19 +60,15 @@ setInterval(async () => {
     }
     last = now;
   } catch {
-    // 途中でファイルが消えたときなどは、次の回に見直す
   } finally {
     checking = false;
   }
 }, 1000);
 
-// つないだままのページに、30秒ごとに空の知らせを送る（間の転送で、つながりが切られないように）
 setInterval(() => {
   for (const client of clients) client.write(': ping\n\n');
 }, 30_000);
 
-// HTML の </body> の直前（なければ末尾）に、再読み込みのスクリプトを足す。
-// latin1 で読むと1バイトが1文字になるため、文字コードが何であっても中身を壊さない。
 function withReload(body) {
   const html = body.toString('latin1');
   const matches = [...html.matchAll(/<\/body\s*>/gi)];
@@ -112,7 +102,6 @@ createServer(async (request, response) => {
 
   if (path.endsWith('/')) path += 'index.html';
 
-  // ai-handson フォルダーの外と、出さないもの（上の ignored）は 404 にする
   const file = normalize(join(root, path));
   if (!file.startsWith(root) || file.slice(root.length).split(sep).some(ignored)) {
     response.writeHead(404).end('Not found');
@@ -121,7 +110,6 @@ createServer(async (request, response) => {
 
   try {
     if ((await stat(file)).isDirectory()) {
-      // フォルダーを / なしで開いたときは、/ を付けたアドレスに案内する（中の index.html を出す）
       response.writeHead(302, { Location: `${url.pathname}/${url.search}` }).end();
       return;
     }

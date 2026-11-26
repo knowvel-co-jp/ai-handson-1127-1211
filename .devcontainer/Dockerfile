@@ -1,15 +1,9 @@
 FROM mcr.microsoft.com/devcontainers/javascript-node:22-bookworm
 
-# - poppler-utils：Claude Code が PDF を読むときに使う pdftoppm・pdftotext
-# - poppler-data・fonts-ipafont：フォントを埋め込んでいない日本語の PDF を、文字化けせずに読む・画像にする
-# - ripgrep：Claude Code がファイルの中を探すときによく使う rg
-# - python3-pip など：Python のライブラリを入れる pip（python3 は元のイメージにある。python でも呼べるようにする）
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
       poppler-utils poppler-data fonts-ipafont ripgrep \
       python3-pip python3-venv python-is-python3 \
  && rm -rf /var/lib/apt/lists/*
 
-# Debian は pip install をそのままでは止める（externally-managed-environment）。
-# このコンテナは授業専用なので、止めずにユーザーのフォルダーへ入れる。
 ENV PIP_BREAK_SYSTEM_PACKAGES=1

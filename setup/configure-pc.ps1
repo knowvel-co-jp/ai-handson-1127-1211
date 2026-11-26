@@ -12,7 +12,7 @@ if (-not $isAdmin) {
   exit 1
 }
 
-# 1. Never sleep / hibernate (sleep drops Chrome Remote Desktop and stops containers)
+# 1. Never sleep / hibernate
 powercfg /change standby-timeout-ac 0
 powercfg /change standby-timeout-dc 0
 powercfg /hibernate off
@@ -35,14 +35,14 @@ if (Test-Path $settingsFile) {
   }
 }
 $wanted = [ordered]@{
-  'chat.disableAIFeatures'          = $true    # hide Copilot chat and its sign-in prompts
-  'extensions.ignoreRecommendations' = $true   # no "install recommended extension" pop-ups
+  'chat.disableAIFeatures'          = $true
+  'extensions.ignoreRecommendations' = $true
   'extensions.autoUpdate'           = $false
-  'update.mode'                     = 'none'   # keep VS Code at the tested version until Day2
+  'update.mode'                     = 'none'
   'workbench.startupEditor'         = 'none'
   'workbench.colorTheme'            = 'Default Light+'
-  'workbench.experimental.modernUI' = $false   # classic (non-rounded) UI
-  'claudeCode.attachOpenFile'       = $false   # do not send the open file to Claude Code (application scope: ignored in devcontainer.json)
+  'workbench.experimental.modernUI' = $false
+  'claudeCode.attachOpenFile'       = $false
 }
 foreach ($name in $wanted.Keys) {
   $settings | Add-Member -NotePropertyName $name -NotePropertyValue $wanted[$name] -Force
@@ -52,7 +52,7 @@ Write-Host "[2/3] VS Code settings written: $settingsFile"
 
 code --install-extension ms-vscode-remote.remote-containers | Out-Null
 
-# Japanese UI: language pack (runs on the Windows side, so it cannot go in devcontainer.json) + "locale" in argv.json
+# Japanese UI
 code --install-extension MS-CEINTL.vscode-language-pack-ja | Out-Null
 $argvFile = Join-Path $env:USERPROFILE '.vscode\argv.json'
 New-Item -ItemType Directory -Force -Path (Split-Path $argvFile) | Out-Null
@@ -61,7 +61,6 @@ if (Test-Path $argvFile) { $argv = [IO.File]::ReadAllText($argvFile) }
 if ($argv -match '"locale"\s*:\s*"[^"]*"') {
   $argv = $argv -replace '"locale"\s*:\s*"[^"]*"', '"locale": "ja"'
 } elseif ($argv -match '"[^"]+"\s*:') {
-  # argv.json may contain comments, so insert the line instead of parsing it
   $argv = ([regex]'\{').Replace($argv, "{`n`t`"locale`": `"ja`",", 1)
 } else {
   $argv = "{`n`t`"locale`": `"ja`"`n}`n"
