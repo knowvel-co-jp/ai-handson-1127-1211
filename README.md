@@ -7,6 +7,7 @@ KnowvelのWindows PC 10台で、Dev Container（WSL2＋Docker Desktop）の中�
 | ファイル | 内容 |
 | --- | --- |
 | `index.html` | プレビューの最初のページ。同じフォルダーに置いたHTMLは `http://localhost:3000/ファイル名` で見られます |
+| `CLAUDE.md` | Claude Code が毎回読むルール（答え方・作り方） |
 | `.devcontainer/devcontainer.json` | コンテナの設定（Claude Code の設定、プレビューの起動など） |
 | `.devcontainer/Dockerfile` | コンテナのイメージ（Node.js の公式イメージに、日本語のPDFを読むための道具（`pdftoppm`・`pdftotext` と日本語の文字のデータ）、`rg`、Python の `pip` を足したもの） |
 | `.devcontainer/server.mjs` | プレビューを表示するための小さなサーバー |
