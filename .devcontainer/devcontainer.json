@@ -7,7 +7,9 @@
     "ANTHROPIC_API_KEY": "",
     "ANTHROPIC_MODEL": "anthropic/claude-haiku-5.5",
     "CLAUDE_CODE_PROMPT_CACHE_TTL": "1h",
-    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "100000",
+    // 会話の要約（コンパクト）を20万トークンで行う。10万では要約の後に明らかに質が落ちたため（2026年11月26日）。
+    // Haiku 5.5 は1回の入力が10万トークンを超えると単価が約5倍になる。使いすぎはキーごとの上限で止める。
+    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "200000",
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "32000",
     "CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION": "false",
     "CLAUDE_CODE_ENABLE_AWAY_SUMMARY": "0",
