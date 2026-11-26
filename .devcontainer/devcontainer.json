@@ -36,6 +36,8 @@
       "settings": {
         "claudeCode.disableLoginPrompt": true,
         "claudeCode.preferredLocation": "sidebar",
+        // 編集したファイルを、1秒ほどで自動で保存する（保存し忘れで Claude Code やプレビューに反映されないのを防ぐ）
+        "files.autoSave": "afterDelay",
         // 学生が触らないファイルを、エクスプローラーと検索に出さない（消してはいない。Claude Code は読める）
         "files.exclude": {
           ".git": true,

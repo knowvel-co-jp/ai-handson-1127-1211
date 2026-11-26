@@ -10,8 +10,8 @@ KnowvelのWindows PC 10台で、Dev Container（WSL2＋Docker Desktop）の中�
 | `CLAUDE.md` | Claude Code が毎回読むルール（答え方・作り方） |
 | `.devcontainer/devcontainer.json` | コンテナの設定（Claude Code の設定、プレビューの起動など） |
 | `.devcontainer/Dockerfile` | コンテナのイメージ（Node.js の公式イメージに、日本語のPDFを読むための道具（`pdftoppm`・`pdftotext` と日本語の文字のデータ）、`rg`、Python の `pip` を足したもの） |
-| `.devcontainer/server.mjs` | プレビューを表示するための小さなサーバー |
-| `setup/configure-pc.ps1` | PCごとの下準備（スリープ停止・VS Codeの設定・キーの登録） |
+| `.devcontainer/server.mjs` | プレビューを表示するための小さなサーバー。ファイルが変わると、開いているページを自動で再読み込みする |
+| `setup/configure-pc.ps1` | PCごとの下準備（スリープ停止・VS Codeの設定と日本語化・キーの登録） |
 
 コンテナで開いた VS Code では、`index.html` と学生が作るファイル以外は、エクスプローラーに出さないようにしています（`devcontainer.json` の `files.exclude`）。
 

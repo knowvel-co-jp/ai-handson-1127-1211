@@ -52,6 +52,23 @@ Write-Host "[2/3] VS Code settings written: $settingsFile"
 
 code --install-extension ms-vscode-remote.remote-containers | Out-Null
 
+# Japanese UI: language pack (runs on the Windows side, so it cannot go in devcontainer.json) + "locale" in argv.json
+code --install-extension MS-CEINTL.vscode-language-pack-ja | Out-Null
+$argvFile = Join-Path $env:USERPROFILE '.vscode\argv.json'
+New-Item -ItemType Directory -Force -Path (Split-Path $argvFile) | Out-Null
+$argv = ''
+if (Test-Path $argvFile) { $argv = [IO.File]::ReadAllText($argvFile) }
+if ($argv -match '"locale"\s*:\s*"[^"]*"') {
+  $argv = $argv -replace '"locale"\s*:\s*"[^"]*"', '"locale": "ja"'
+} elseif ($argv -match '"[^"]+"\s*:') {
+  # argv.json may contain comments, so insert the line instead of parsing it
+  $argv = ([regex]'\{').Replace($argv, "{`n`t`"locale`": `"ja`",", 1)
+} else {
+  $argv = "{`n`t`"locale`": `"ja`"`n}`n"
+}
+[IO.File]::WriteAllText($argvFile, $argv, (New-Object Text.UTF8Encoding($false)))
+Write-Host "      VS Code display language: Japanese ($argvFile)"
+
 # 3. OpenRouter key for this PC -> user environment variable ANTHROPIC_AUTH_TOKEN
 $current = [Environment]::GetEnvironmentVariable('ANTHROPIC_AUTH_TOKEN', 'User')
 $change = $true
