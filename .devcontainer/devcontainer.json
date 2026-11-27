@@ -27,7 +27,7 @@
   },
   "customizations": {
     "vscode": {
-      "extensions": ["anthropic.claude-code@2.1.323", "tomoki1207.pdf@1.2.2"],
+      "extensions": ["anthropic.claude-code@2.1.323"],
       "settings": {
         "claudeCode.disableLoginPrompt": true,
         "claudeCode.preferredLocation": "sidebar",

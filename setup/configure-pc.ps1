@@ -51,6 +51,7 @@ foreach ($name in $wanted.Keys) {
 Write-Host "[2/3] VS Code settings written: $settingsFile"
 
 code --install-extension ms-vscode-remote.remote-containers | Out-Null
+code --install-extension tomoki1207.pdf@1.2.2 | Out-Null
 
 # Japanese UI
 code --install-extension MS-CEINTL.vscode-language-pack-ja | Out-Null
