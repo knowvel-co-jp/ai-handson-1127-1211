@@ -7,3 +7,4 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
+RUN git config --system --add safe.directory '*'

@@ -66,7 +66,7 @@ foreach ($p in $packages) {
     continue
   }
   Write-Host "Installing $($p.Id) $($p.Version)..."
-  & winget install -e --id $p.Id --version $p.Version --accept-source-agreements --accept-package-agreements
+  & winget install -e --id $p.Id --version $p.Version --source winget --accept-source-agreements --accept-package-agreements
   if (-not (Get-InstalledVersion $p.Name)) {
     Stop-WithMessage "Could not install $($p.Id) $($p.Version). Ask the staff lead (do not install another version)."
   }
