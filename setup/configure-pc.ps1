@@ -43,6 +43,7 @@ $wanted = [ordered]@{
   'workbench.colorTheme'            = 'Default Light+'
   'workbench.experimental.modernUI' = $false
   'claudeCode.attachOpenFile'       = $false
+  'window.title'                    = 'VS Code'
 }
 foreach ($name in $wanted.Keys) {
   $settings | Add-Member -NotePropertyName $name -NotePropertyValue $wanted[$name] -Force
